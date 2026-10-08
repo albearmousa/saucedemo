@@ -18,7 +18,7 @@ test.describe("Login functionality", () => {
     await expect(inventoryPage.title).toHaveText("Products");
   });
 
-  test("user cannot login with invalid credentials", async ({}) => {
+  test("user cannot login with invalid credentials", async () => {
     await loginPage.login("standard_user", "secret_sauces");
 
     await expect(loginPage.errorMsg).toBeVisible();
@@ -27,11 +27,35 @@ test.describe("Login functionality", () => {
     );
   });
 
-  test("user cannot login with locked out user", async ({}) => {
+  test("user cannot login with locked out user", async () => {
     await loginPage.login("locked_out_user", "secret_sauce");
     await expect(loginPage.errorMsg).toBeVisible();
     await expect(loginPage.errorMsg).toContainText(
       "this user has been locked out",
+    );
+  });
+
+  test("user cannot login with empty username and password", async () => {
+    await loginPage.login("", "");
+    await expect(loginPage.errorMsg).toBeVisible();
+    await expect(loginPage.errorMsg).toContainText(
+      "Epic sadface: Username is required",
+    );
+  });
+
+  test("user cannot login with empty password", async () => {
+    await loginPage.login("standard_user", "");
+    await expect(loginPage.errorMsg).toBeVisible();
+    await expect(loginPage.errorMsg).toContainText(
+      "Epic sadface: Password is required",
+    );
+  });
+
+  test("user cannot login with empty username", async () => {
+    await loginPage.login("", "secret_sauce");
+    await expect(loginPage.errorMsg).toBeVisible();
+    await expect(loginPage.errorMsg).toContainText(
+      "Epic sadface: Username is required",
     );
   });
 });
