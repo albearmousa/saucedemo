@@ -14,7 +14,7 @@ test.describe("Inventory functionality", () => {
     await expect(inventoryPage.title).toHaveText("Products");
   });
 
-  test("should add an item to the cart", async () => {
+  test("user can add an item to the cart", async () => {
     await inventoryPage.addToCart("Sauce Labs Backpack");
     await expect(inventoryPage.cartBadge).toHaveText("1");
   });

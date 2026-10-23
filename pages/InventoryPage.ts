@@ -8,6 +8,7 @@ export class InventoryPage extends BasePage {
   readonly itemPrices: Locator;
   readonly cartBadge: Locator;
   readonly sortDropdown: Locator;
+  readonly cartLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -17,6 +18,7 @@ export class InventoryPage extends BasePage {
     this.itemPrices = page.locator('[data-test="inventory-item-price"]');
     this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
     this.sortDropdown = page.locator('[data-test="product-sort-container"]');
+    this.cartLink = page.locator('[data-test="shopping-cart-link"]');
   }
 
   async getTitle() {
@@ -39,5 +41,9 @@ export class InventoryPage extends BasePage {
 
   async sortBy(option: string) {
     await this.sortDropdown.selectOption(option);
+  }
+
+  async openCart() {
+    await this.cartLink.click();
   }
 }
