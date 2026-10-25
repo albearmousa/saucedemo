@@ -27,6 +27,10 @@ export class CartPage extends BasePage {
   }
 
   async continueShopping() {
-  await this.continueToShoppingBtn.click();
-}
+    await this.continueToShoppingBtn.click();
+  }
+
+  async openCheckout() {
+    await this.checkoutBtn.click();
+  }
 }
