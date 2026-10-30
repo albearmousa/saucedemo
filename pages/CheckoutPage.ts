@@ -28,6 +28,7 @@ export class CheckoutPage extends BasePage {
     await this.continueBtn.click();
   }
 
+
   async cancelCheckout() {
     await this.cancelBtn.click();
   }
