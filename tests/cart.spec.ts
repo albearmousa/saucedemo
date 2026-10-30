@@ -56,9 +56,6 @@ test.describe("Empty cart", () => {
     await loginPage.goTo();
     await loginPage.login("standard_user", "secret_sauce");
     await expect(inventoryPage.title).toHaveText("Products");
-    await inventoryPage.addToCart("Sauce Labs Backpack");
-    await inventoryPage.addToCart("Sauce Labs Bike Light");
-    await expect(inventoryPage.cartBadge).toHaveText("2");
     await inventoryPage.openCart();
     await expect(cartPage.title).toHaveText("Your Cart");
   });
