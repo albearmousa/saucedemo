@@ -2,6 +2,7 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class LoginPage extends BasePage {
+  readonly title: Locator;
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
@@ -9,6 +10,7 @@ export class LoginPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
+    this.title = page.locator("div.login_logo");
     this.usernameInput = page.getByRole("textbox", { name: "Username" });
     this.passwordInput = page.getByRole("textbox", { name: "Password" });
     this.loginButton = page.getByRole("button", { name: "Login" });

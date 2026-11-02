@@ -48,5 +48,7 @@ test.describe("Checkout Overview Page Tests", () => {
 
     await checkoutCompletePage.goBackProducts();
     await expect(inventoryPage.title).toHaveText("Products");
+
+  
   });
 });
