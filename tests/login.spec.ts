@@ -1,24 +1,21 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
-import { InventoryPage } from "../pages/InventoryPage";
+import { test, expect } from "../fixtures";
 
 test.describe("Login functionality", () => {
-  let loginPage: LoginPage;
-  let inventoryPage: InventoryPage;
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
+  test.beforeEach(async ({ loginPage }) => {
     await loginPage.goTo();
   });
 
-  test("user can login with valid credentials", async ({ page }) => {
+  test("user can login with valid credentials", async ({
+    page,
+    loginPage,
+    inventoryPage,
+  }) => {
     await loginPage.login("standard_user", "secret_sauce");
     await expect(page).toHaveURL("/inventory.html");
     await expect(inventoryPage.title).toHaveText("Products");
   });
 
-  test("user cannot login with invalid credentials", async () => {
+  test("user cannot login with invalid credentials", async ({ loginPage }) => {
     await loginPage.login("standard_user", "secret_sauces");
 
     await expect(loginPage.errorMsg).toBeVisible();
@@ -27,7 +24,7 @@ test.describe("Login functionality", () => {
     );
   });
 
-  test("user cannot login with locked out user", async () => {
+  test("user cannot login with locked out user", async ({ loginPage }) => {
     await loginPage.login("locked_out_user", "secret_sauce");
     await expect(loginPage.errorMsg).toBeVisible();
     await expect(loginPage.errorMsg).toContainText(
@@ -35,7 +32,9 @@ test.describe("Login functionality", () => {
     );
   });
 
-  test("user cannot login with empty username and password", async () => {
+  test("user cannot login with empty username and password", async ({
+    loginPage,
+  }) => {
     await loginPage.login("", "");
     await expect(loginPage.errorMsg).toBeVisible();
     await expect(loginPage.errorMsg).toContainText(
@@ -43,7 +42,7 @@ test.describe("Login functionality", () => {
     );
   });
 
-  test("user cannot login with empty password", async () => {
+  test("user cannot login with empty password", async ({ loginPage }) => {
     await loginPage.login("standard_user", "");
     await expect(loginPage.errorMsg).toBeVisible();
     await expect(loginPage.errorMsg).toContainText(
@@ -51,7 +50,7 @@ test.describe("Login functionality", () => {
     );
   });
 
-  test("user cannot login with empty username", async () => {
+  test("user cannot login with empty username", async ({ loginPage }) => {
     await loginPage.login("", "secret_sauce");
     await expect(loginPage.errorMsg).toBeVisible();
     await expect(loginPage.errorMsg).toContainText(
