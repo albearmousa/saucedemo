@@ -1,6 +1,7 @@
 import { test, expect } from "../fixtures";
 
 test.describe("Login functionality", () => {
+  
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.goTo();
   });

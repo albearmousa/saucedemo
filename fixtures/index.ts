@@ -1,11 +1,21 @@
 import { test as base, expect } from "@playwright/test";
-import { LoginPage } from "../pages/loginPage";
-import { InventoryPage } from "../pages/inventoryPage";
+import { LoginPage } from "../pages/LoginPage";
+import { InventoryPage } from "../pages/InventoryPage";
+import { CartPage } from "../pages/CartPage";
+import { CheckoutPage } from "../pages/CheckoutPage";
+import { CheckoutCompletePage } from "../pages/CheckoutCompletePage";
+import { CheckoutOverviewPage } from "../pages/CheckoutOverviewPage";
+import { SideMenu } from "../pages/components/SideMenu";
 
 type MyFixtures = {
   loginPage: LoginPage;
   inventoryPage: InventoryPage;
-  loggedInIventoryPage: InventoryPage;
+  loggedInInventoryPage: InventoryPage;
+  cartPage: CartPage;
+  checkoutPage: CheckoutPage;
+  checkoutCompletePage: CheckoutCompletePage;
+  checkoutOverviewPage: CheckoutOverviewPage;
+  sideMenu: SideMenu;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -15,13 +25,30 @@ export const test = base.extend<MyFixtures>({
   inventoryPage: async ({ page }, use) => {
     await use(new InventoryPage(page));
   },
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
+  },
+  checkoutPage: async ({ page }, use) => {
+    await use(new CheckoutPage(page));
+  },
+  checkoutCompletePage: async ({ page }, use) => {
+    await use(new CheckoutCompletePage(page));
+  },
+  checkoutOverviewPage: async ({ page }, use) => {
+    await use(new CheckoutOverviewPage(page));
+  },
+  sideMenu: async ({ page }, use) => {
+    await use(new SideMenu(page));
+  },
 
-  loggedInIventoryPage: async ({ loginPage, inventoryPage }, use) => {
+  loggedInInventoryPage: async ({ loginPage, inventoryPage }, use) => {
     await loginPage.goTo("/");
     await loginPage.login("standard_user", "secret_sauce");
     await expect(inventoryPage.title).toContainText("Products");
     await use(inventoryPage);
   },
 });
+
+
 
 export { expect };
