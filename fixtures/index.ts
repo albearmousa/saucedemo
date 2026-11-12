@@ -16,6 +16,7 @@ type MyFixtures = {
   checkoutCompletePage: CheckoutCompletePage;
   checkoutOverviewPage: CheckoutOverviewPage;
   sideMenu: SideMenu;
+  cartWithItemsPage: CartPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -47,7 +48,17 @@ export const test = base.extend<MyFixtures>({
     await expect(inventoryPage.title).toContainText("Products");
     await use(inventoryPage);
   },
+
+  cartWithItemsPage: async ({ loggedInInventoryPage, cartPage }, use) => {
+    await loggedInInventoryPage.addToCart("Sauce Labs Backpack");
+    await loggedInInventoryPage.addToCart("Sauce Labs Bike Light");
+    await expect(loggedInInventoryPage.cartBadge).toHaveText("2");
+    await loggedInInventoryPage.openCart();
+    await expect(cartPage.title).toHaveText("Your Cart");
+    await use(cartPage);
+  },
 });
+
 
 
 

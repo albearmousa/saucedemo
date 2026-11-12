@@ -1,13 +1,8 @@
 import { test, expect } from "../fixtures";
 
 test.describe("Checkout process", () => {
-  test.beforeEach(async ({ loggedInInventoryPage, cartPage, checkoutPage }) => {
-    await loggedInInventoryPage.addToCart("Sauce Labs Backpack");
-    await loggedInInventoryPage.addToCart("Sauce Labs Bike Light");
-    await expect(loggedInInventoryPage.cartBadge).toHaveText("2");
-    await loggedInInventoryPage.openCart();
-    await expect(cartPage.title).toHaveText("Your Cart");
-    await cartPage.openCheckout();
+  test.beforeEach(async ({ cartWithItemsPage, checkoutPage }) => {
+    await cartWithItemsPage.openCheckout();
     await expect(checkoutPage.title).toHaveText("Checkout: Your Information");
   });
 
