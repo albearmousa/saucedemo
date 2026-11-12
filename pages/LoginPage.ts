@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { User } from "../test-data/users";
 
 export class LoginPage extends BasePage {
   readonly title: Locator;
@@ -16,9 +17,9 @@ export class LoginPage extends BasePage {
     this.loginButton = page.getByRole("button", { name: "Login" });
     this.errorMsg = page.locator('[data-test="error"]');
   }
-  async login(username: string, password: string) {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
+  async login(user: User) {
+    await this.usernameInput.fill(user.username);
+    await this.passwordInput.fill(user.password);
     await this.loginButton.click();
   }
 }

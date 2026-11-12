@@ -6,6 +6,8 @@ import { CheckoutPage } from "../pages/CheckoutPage";
 import { CheckoutCompletePage } from "../pages/CheckoutCompletePage";
 import { CheckoutOverviewPage } from "../pages/CheckoutOverviewPage";
 import { SideMenu } from "../pages/components/SideMenu";
+import { users } from "../test-data/users";
+import { products } from "../test-data/products";
 
 type MyFixtures = {
   loginPage: LoginPage;
@@ -44,14 +46,14 @@ export const test = base.extend<MyFixtures>({
 
   loggedInInventoryPage: async ({ loginPage, inventoryPage }, use) => {
     await loginPage.goTo("/");
-    await loginPage.login("standard_user", "secret_sauce");
+    await loginPage.login(users.standard);
     await expect(inventoryPage.title).toContainText("Products");
     await use(inventoryPage);
   },
 
   cartWithItemsPage: async ({ loggedInInventoryPage, cartPage }, use) => {
-    await loggedInInventoryPage.addToCart("Sauce Labs Backpack");
-    await loggedInInventoryPage.addToCart("Sauce Labs Bike Light");
+    await loggedInInventoryPage.addToCart(products.backpack);
+    await loggedInInventoryPage.addToCart(products.bikeLight);
     await expect(loggedInInventoryPage.cartBadge).toHaveText("2");
     await loggedInInventoryPage.openCart();
     await expect(cartPage.title).toHaveText("Your Cart");
